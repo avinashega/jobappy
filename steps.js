@@ -10,7 +10,7 @@ module.exports = function() {
 
         'button_test': {
             type: 'quick_reply',
-            question: 'Can you see the buttons below?',
+            question: 'Can you see the button below?',
             options: [
                 {
                     title: 'Yes',
@@ -28,7 +28,7 @@ module.exports = function() {
 
         'button_test_success': {
             type: 'quick_reply',
-            question: 'Great! I\'m glad you figured out how those buttons work :)',
+            question: 'Great! I\'m glad you figured out how those buttons work, they\'ll come in handy.',
             options: [
                 {
                     title: 'Thanks!',
@@ -68,6 +68,10 @@ module.exports = function() {
             {
                 type: 'text',
                 message: 'Whatever that means 🙄',
+            },
+            {
+                type: 'text',
+                message: 'As we get to know one another, I\'ll learn more about you.'
             },
             {
                 type: 'text',
@@ -287,8 +291,8 @@ module.exports = function() {
         'mood_ok': [
             {
                 type: 'text',
-                message: 'Ok!',
-                continue: 'done_for_today'
+                message: 'OK',
+                continue: 'phq_4'
             }
         ],
         'phq_4': [
