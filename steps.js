@@ -63,6 +63,10 @@ module.exports = function() {
         'continue_house_keeping': [
             {
                 type: 'text',
+                message: 'The folks who created me did so to help me come across more "human".'
+            },
+            {
+                type: 'text',
                 message: 'Whatever that means 🙄',
             },
             {

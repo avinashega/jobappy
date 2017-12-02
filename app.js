@@ -489,7 +489,7 @@ function sendPHQ9test(recipientId, question, score) {
             sendTextMessage(recipientId, 'You are severely depressed. You need to see a doctor immediately. Let me point you to some of the best doctors in your area.');
         }
         }, 1000)*/
-        executeStep(recipientId, 'done_for_today', {});
+        executeStep(recipientId, 'phq4_finished', {});
     }
 }
 
