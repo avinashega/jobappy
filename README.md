@@ -12,17 +12,11 @@ We may collect the following types of personal information from you:
 
 name
 address
-phone number
-fax number
-information about the goods or services you have ordered
-information from enquiries you have made
-communications between us
-credit card information
-information about the Instagram account(s) you add
-information about the post(s) you wish to make to your added account(s)
+email
+
 3. How we collect your personal information
 
-We collect personal information from you in a variety of ways, including: when you interact with us electronically or in person; when you access our website; and when we provide our services
+We collect personal information from you in a variety of ways, including: when you interact with us electronically or in person; when you access our bot; and when we provide our services
 to you.
 
 4. Use of your personal information
