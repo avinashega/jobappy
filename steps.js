@@ -612,7 +612,15 @@ module.exports = function() {
                 message: 'Bye for now. 👋'
             }
         ],
+        'depression_level':{
+            type: 'text',
+            message:'Your depression level:'
+        },
         'phq9_finished_0':[
+            {
+                type: 'step',
+                name:'depression_level'
+            },
             {
                 type: 'image',
                 url: 'phq9_0.png'
@@ -624,6 +632,10 @@ module.exports = function() {
         ],
         'phq9_finished_1':[
             {
+                type: 'step',
+                name:'depression_level'
+            },
+            {
                 type: 'image',
                 url: 'phq9_1.png'
             },
@@ -633,6 +645,10 @@ module.exports = function() {
             }
         ],
         'phq9_finished_2':[
+            {
+                type: 'step',
+                name:'depression_level'
+            },
             {
                 type: 'image',
                 url: 'phq9_2.png'
@@ -644,6 +660,10 @@ module.exports = function() {
         ],
         'phq9_finished_3':[
             {
+                type: 'step',
+                name:'depression_level'
+            },
+            {
                 type: 'image',
                 url: 'phq9_3.png'
             },
@@ -653,6 +673,10 @@ module.exports = function() {
             }
         ],
         'phq9_finished_4':[
+            {
+                type: 'step',
+                name:'depression_level'
+            },
             {
                 type: 'image',
                 url: 'phq9_4.png'
