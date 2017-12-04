@@ -264,7 +264,12 @@ function receivedMessage(event) {
             case 'phq9':
                 triggerPHQ9(senderID);
                 break;
-
+            case 'mood last week':
+                executeStep(senderID, 'mood_last_week', {});
+                break;
+            case 'energy last week':
+                executeStep(senderID, 'energy_last_week', {});
+                break;
             /*case 'image':
               requiresServerURL(sendImageMessage, [senderID]);
               break;
@@ -497,7 +502,7 @@ function sendPHQ9test(recipientId, question, score) {
  * Send an image using the Send API.
  *
  */
-function sendImageMessage(recipientId) {
+function sendImageMessage(recipientId, url) {
     var messageData = {
         recipient: {
             id: recipientId
@@ -506,7 +511,7 @@ function sendImageMessage(recipientId) {
             attachment: {
                 type: "image",
                 payload: {
-                    url: SERVER_URL + "/assets/rift.png"
+                    url: url
                 }
             }
         }
@@ -942,6 +947,9 @@ function executeStep(recipientId, i, data) {
     } else {
         if (step && step.type) {
             switch (step.type) {
+                case 'step':
+                    executeStep(recipientId, step.name, data);
+                    break;
                 case 'text':
                     sendTextMessage(recipientId, process(step.message, data));
                     break;
@@ -951,6 +959,10 @@ function executeStep(recipientId, i, data) {
                     break;
                 case 'gif':
                     sendGifMessage(recipientId, step.url);
+                    break;
+                case 'image':
+                    sendImageMessage(recipientId, step.url);
+                    break;
                 default:
                     break;
             }
