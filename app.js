@@ -482,19 +482,20 @@ function sendPHQ9test(recipientId, question, score) {
         sendQuickReply(recipientId, title, answers);
     } else {
         sendTextMessage(recipientId, 'You have now finished the test. Your score is '+score);
-        /*setTimeout(() => {
-            if(score < 4) {
-            sendTextMessage(recipientId, 'Hey there Normal person. There is nothing to worry about');
-            sendGifMessage(recipientId, 'http://bestanimations.com/Music/Dancers/guys-dancing/funny-dance-3.gif');
+        setTimeout(() => {
+        if(score < 4) {
+            executeStep(recipientId, 'phq9_finished_0', {});
         } else if(score < 10) {
-            sendTextMessage(recipientId, 'You are mildly depressed. Perhaps you could use this video to cheer you up a bit');
+            executeStep(recipientId, 'phq9_finished_1', {});
         } else if(score < 15) {
-            sendTextMessage(recipientId, 'Your depression is moderately severe. I\'d recommend you watch this youtube video on how to cope up with depression.');
+            executeStep(recipientId, 'phq9_finished_2', {});
+        } else if(score < 19) {
+            executeStep(recipientId, 'phq9_finished_3', {});
         } else {
-            sendTextMessage(recipientId, 'You are severely depressed. You need to see a doctor immediately. Let me point you to some of the best doctors in your area.');
+            executeStep(recipientId, 'phq9_finished_4', {});
         }
-        }, 1000)*/
-        executeStep(recipientId, 'phq4_finished', {});
+        }, 1000)
+
     }
 }
 

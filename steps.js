@@ -179,6 +179,12 @@ module.exports = function() {
                 message: 'If you\'re constantly tired, then maybe you should check in with your doctor?'
             },
             {
+                type: 'step',
+                name:'find_doctor_query'
+            }
+        ],
+        'find_doctor_query':[
+            {
                 type: 'quick_reply',
                 question: 'Do you want me to help you find a local doctor?',
                 options: [
@@ -340,7 +346,7 @@ module.exports = function() {
         'phq_4': [
             {
                 type: 'text',
-                message: 'Ok. I\'d like to finish up with a short clinical questionnaire, it\'s just four questions.'
+                message: 'I\'d like to finish up with a short clinical questionnaire, it\'s just four questions.'
             },
             {
                 type: 'text',
@@ -604,6 +610,56 @@ module.exports = function() {
             {
                 type: 'text',
                 message: 'Bye for now. 👋'
+            }
+        ],
+        'phq9_finished_0':[
+            {
+                type: 'image',
+                url: 'phq9_0.png'
+            },
+            {
+                type: 'step',
+                name: 'done_for_today'
+            }
+        ],
+        'phq9_finished_1':[
+            {
+                type: 'image',
+                url: 'phq9_1.png'
+            },
+            {
+                type: 'step',
+                name: 'done_for_today'
+            }
+        ],
+        'phq9_finished_2':[
+            {
+                type: 'image',
+                url: 'phq9_2.png'
+            },
+            {
+                type: 'step',
+                name: 'find_doctor_query'
+            }
+        ],
+        'phq9_finished_3':[
+            {
+                type: 'image',
+                url: 'phq9_3.png'
+            },
+            {
+                type: 'step',
+                name: 'find_doctor_query'
+            }
+        ],
+        'phq9_finished_4':[
+            {
+                type: 'image',
+                url: 'phq9_4.png'
+            },
+            {
+                type: 'step',
+                name: 'find_doctor_query'
             }
         ]
     }
