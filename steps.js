@@ -218,21 +218,21 @@ module.exports = function() {
         'mood_last_week':[
             {
                 type: 'image',
-                url: 'https://gm1.ggpht.com/vsw97N0RZtZC3rSfT6ktvvKca5z4Bfoj-KaGdbNRRgH6pKf2GDSTHdikRrrifk7s7w5rPfoYOYqPvXeaQbK_IOXtbrHhi00p8HVdcS_Qm7cIp1A8Fw5je9SQBhLR4XUWtIuTOGP6MAxRPF5tmnPZrAgzLfVL5FENc1jqwoBwf3Ukzn9m1N8BRWK4O3fEr6hnN10PtH-iPJtgATvQ_Jswkojfhfem27nLdt7POlGQOe691qTNUQxpRloxLEFpuLhTf_lyV5WT6qyEo_zVhlYh-wIPzuj_2IAtCQVjh81QusDPxSrWHwc2XkJK-KGtm13-86MKAu48I5OEuz2R_Ojp6fgmnLrJhLAU3d0YfmKJOeOfKm5-wvnFdU_PEzXysWnsjJ08AVWNDA-JmGPl45W7mtEXkh5CNB5J-5NUu-dYEiq8asnWIHaKnhauEuekBc3ZNQI8Fc4rzwQT2n-eB5e8Y5rTgxUY2toZEWAv72dMvJ_OoGmBuVP6PD7-uNssUB37vQdDlvaVon_iWq7seqQZO1lQ9EjDN27BlQD9BXTV8dafZjZveDbhGJOuNu6Z8rA-wGCICEFNCqOUbWPzE8srjxa7Tk2WS-KaP-EzLGCDy2N3IYvboom851TSALy4RHE2ONxoEb9Si2H8xPg05LddazNc6WhMDZijC9gie9gn4_Y8J6GS9wDn07eGaWUM8g=w626-h502-l75-ft'
+                url: 'mood_chart.png'
             },
             {
                 type: 'image',
-                url: 'https://gm1.ggpht.com/YWrgIvamfj4rVSSls0WK6rJNoEeNHUpi8OqJ6NubieicV1KcpbRe7YHmGJKXgueh0UxDcSIJ6_Hq16sqV6aIN9-z_r582q8JmzzEKokzqKIYV5t4qwDq6yek7n5gHK8KIT75IcQGfpCi8j5L7f4pL4SZ2czTjHUI397R_nMV9KP2oS6dm-HdaLVxWGmXdyRmxJ9tnNce8_RToOA_a4kpTtZSMAIyYaiKXOEFYCFsAL3lCPrY8gQ-ki0JrisOWhhnnzWnzF7EuUhRnSm1EhBtxU2MhM_KRPFSsndiRjDu3hOFKozcHgpqSIfnnfhSQg-5EyP0S8eQHqJaOzq4XVA3omLZMb5ueA8nE9MLR4FzZU72G_1KBtg8G72FQ0OYiIrViEp8gJ-FS_FvZa8thmC0zxjBCHBh1SLWcLXwMl3MsK_e7sE-dE4rANF2vFLyzBMnA3x_nPQ5s_tYeTxQL3oyTc7pUyaPSDqkb6ziMTR4Jk8rOehHBOjBcv4y7acEjBqk8nJbl2RKaFlQjCFKRpKECh2wqzr5lYXMx2jvje7TfYXVQ3f5PDfofU0C0BsTyiWheCcrXrM5SlkpL3hV45KYwVlXVqsMLyQdqDWO7rHY57AbcYj_TQ7_Kc-4FseGAs_H5uDeRTQRH2K-f4uu7Jq4fv2sOXzbFtXFraenFNEx8Rrnxut1haUKwfklE5asiGA=w446-h230-l75-ft'
+                url: 'mood_table.png'
             }
         ],
         'energy_last_week':[
             {
                 type: 'image',
-                url: 'https://gm1.ggpht.com/dbNa8qRAQNysc2-4ickQ2OrjJvWnKbMRgC749jt8jefYI2O4GLDKt7Xb8bsUBg8h3bJvKkyB1vIJuJCPp-Ag9VdP5Nq_nxlhBHV36VqpklmpVRVLh8kPAxCrrIhhZoFDiXb4SrJwAq8eomTzFaDONwi9kgRYD65uk-eOnbGUfP_ae8ccSXPlGhT3sbkh-dBOPNQhjxfJA9MCOhHh7hgocojuGmsfltJY6FihrT9t673sF8uUWCX9qXflAbv3M245RkvnK6Db1zV20ho7yhfQsOIZop1Ag0zBRhqODPxNSVV4LpyPkDU0isvSdVZS1MwubWfzbxPQj8nChcO6n9Chf5ZWhnahad1FJbA0-HRqGCUTV5tDBMThVPooYuLSjRzWAFTLamncRQKDw0DzSplob_orA5e6ZbqE9-oa2qnO5cP7M6TQUo1tv0-aJBToERHoUwFxEvNzJKVJVpxbfQ2KlK2uKvItpPaL82obeeBsS85oG1s4-98OUK-GlCtq2wA9iu1jocrzqSlG_e1aLVFi7Nz8VzUwdk9AlsfEXac2iQER0i85SBGsxnpK3iaimTHGDa0o2WW864q8nIp4hil2a9zgv-DWkF-BSHUCCKbPCJzluUcvK8LhbI3FHfx8rhenpQJ9teeVPFCgUqW-RqWd8fGVusa91cPHF0OY943y1NFulvX3tctUPrmMWGxDxR8=w760-h578-l75-ft'
+                url: 'energy_chart.png'
             },
             {
                 type: 'image',
-                url: 'https://gm1.ggpht.com/_h1AkjUzsNHB_E8LUKBkLihUPoZojK5gdgwqJdJp03Kk6Uf6e21gmEVYrKRy6NCdNaANSqL7ETfFmLIS-ucw_cWH-alJmxDJfwp6sH3tLfesOUPkzcYHYHm5pINi1ovt314-x7GRVWnrLeZRylkIMbqJM1g2JNEBUoykwyWKPXk0wEr73P1LKoSJrEXnHXacImh3VkPdk9qZD2wwtCPtCDNWHOhRsv872aWCRx7UNbZbNTk6M0mQ28yRCNRz1O_u_0E3Q0NVgmU3LNDrS4sWKCwUh8tInWvn9lpY2YJ0hxVqbRRndJO2gTDuOiNKO4WTd_-tzit6VW3XYupUNlUkUjAo2Bm_lIUXhN9zmA4-SRKkM1NgBetw9gs-tM0eSZl_xwZ5bcgIKo0kYyQe8AxQkcYUR3Jma9yo9wuc-h0c5DphZ0MbEaX8QUjN0raIVZI_oJs3CSsvSPUyKJ-i9aoE_k2tWERqqMR_Sx9tMhJqqcGAPS_E91W6yqNVlK672034w00tnD5YHNBLR-gMVFsr5Y6d4-iBTCwySgVty3qRoDEzp84KMfObwS8gIGvZhbmcMh46nvJJa-xDC5pHBejBdXSEK-4kq-ftmDTKXzEtpmHkjcM_6wntLIZV6XJm_NdeUFpDEe9PRRq5iueFcen56fUJxrLPwOfFDjlOpkPGclse8SCaR3VN4rsvr89jPw=w540-h340-l75-ft'
+                url: 'energy_table.png'
             }
         ],
         'find_doctor': [
