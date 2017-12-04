@@ -167,10 +167,6 @@ module.exports = function() {
         ],
         'energy_tired': [
             {
-                type: 'action',
-                name: 'mood_stats'
-            },
-            {
                 type: 'text',
                 message: 'Appreciate sharing that.'
             },
@@ -297,6 +293,10 @@ module.exports = function() {
                 message: 'Appreciate sharing that.'
             },
             {
+                type: 'step',
+                name: 'mood_stats'
+            },
+            {
                 type: 'text',
                 message: 'If it\'s okay, I\'d like to ask you a few questions.'
             },
@@ -327,6 +327,10 @@ module.exports = function() {
             }
         ],
         'mood_ok': [
+            {
+                type: 'step',
+                name: 'mood_stats'
+            },
             {
                 type: 'text',
                 message: 'OK',
