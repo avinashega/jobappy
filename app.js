@@ -18,7 +18,9 @@ const
     https = require('https'),
     request = require('request'),
     phq9 = require('./phq9'),
-    steps = require('./steps')();
+    steps = require('./steps')(),
+    db = require('./db'),
+    User = require('./context');
 
 var app = express();
 app.set('port', 5000);
@@ -218,118 +220,135 @@ function receivedMessage(event) {
     var timeOfMessage = event.timestamp;
     var message = event.message;
 
-    console.log("Received message for user %d and page %d at %d with message:",
-        senderID, recipientID, timeOfMessage);
-    console.log(JSON.stringify(message));
+    User.findOneAndUpdate({id:recipientID}, {}, {upsert:true, new: true}, function(err, user){
 
-    var isEcho = message.is_echo;
-    var messageId = message.mid;
-    var appId = message.app_id;
-    var metadata = message.metadata;
-
-    // You may get a text or attachment but not both
-    var messageText = message.text;
-    var messageAttachments = message.attachments;
-    var quickReply = message.quick_reply;
-
-    if (isEcho) {
-        // Just logging message echoes to console
-        console.log("Received echo for message %s and app %d with metadata %s",
-            messageId, appId, metadata);
-        return;
-    } else if (quickReply) {
-        var quickReplyPayload = JSON.parse(quickReply.payload);
-        console.log("Quick reply for message %s with payload %s",
-            messageId, quickReplyPayload);
-        if(quickReplyPayload.action == 'phq9') {
-            sendPHQ9test(senderID, quickReplyPayload.seq, quickReplyPayload.score);
-        } else if(quickReplyPayload.step) {
-            executeStep(senderID, quickReplyPayload.step, quickReplyPayload);
-        } else {
-            sendTextMessage(senderID, quickReply.title);
+        var user = user;
+        if(!user.context) {
+            user.context = {};
         }
-        return;
-    }
+        var isEcho = message.is_echo;
+        var messageId = message.mid;
+        var appId = message.app_id;
+        var metadata = message.metadata;
 
-    if (messageText) {
+        // You may get a text or attachment but not both
+        var messageText = message.text;
+        var messageAttachments = message.attachments;
+        var quickReply = message.quick_reply;
 
-        // If we receive a text message, check to see if it matches any special
-        // keywords and send back the corresponding example. Otherwise, just echo
-        // the text we received.
-        switch (messageText.replace(/[^\w\s]/gi, '').trim().toLowerCase()) {
-            case 'hello':
-            case 'hi':
-                onboardUser(senderID);
-                break;
-            case 'phq9':
-                triggerPHQ9(senderID);
-                break;
-            case 'mood last week':
-                executeStep(senderID, 'mood_last_week', {});
-                break;
-            case 'energy last week':
-                executeStep(senderID, 'energy_last_week', {});
-                break;
-            /*case 'image':
-              requiresServerURL(sendImageMessage, [senderID]);
-              break;
-
-            case 'gif':
-              requiresServerURL(sendGifMessage, [senderID]);
-              break;
-
-            case 'audio':
-              requiresServerURL(sendAudioMessage, [senderID]);
-              break;
-
-            case 'video':
-              requiresServerURL(sendVideoMessage, [senderID]);
-              break;
-
-            case 'file':
-              requiresServerURL(sendFileMessage, [senderID]);
-              break;
-
-            case 'button':
-              sendButtonMessage(senderID);
-              break;
-
-            case 'generic':
-              requiresServerURL(sendGenericMessage, [senderID]);
-              break;
-
-            case 'receipt':
-              requiresServerURL(sendReceiptMessage, [senderID]);
-              break;
-
-            case 'quick reply':
-              sendQuickReply(senderID);
-              break;
-
-            case 'read receipt':
-              sendReadReceipt(senderID);
-              break;
-
-            case 'typing on':
-              sendTypingOn(senderID);
-              break;
-
-            case 'typing off':
-              sendTypingOff(senderID);
-              break;
-
-            case 'account linking':
-              requiresServerURL(sendAccountLinking, [senderID]);
-              break;
-              */
-
-            default:
-                sendTextMessage(senderID, messageText+'?');
+        if (isEcho) {
+            return;
+        } else if (quickReply) {
+            var quickReplyPayload = JSON.parse(quickReply.payload);
+            if(quickReplyPayload.action == 'phq9') {
+                sendPHQ9test(senderID, quickReplyPayload.seq, quickReplyPayload.score, user);
+            } else if(quickReplyPayload.step) {
+                executeStep(senderID, quickReplyPayload.step, quickReplyPayload, user);
+            } else {
+                sendTextMessage(senderID, quickReply.title, user);
+            }
+            return;
         }
-    } else if (messageAttachments) {
-        sendTextMessage(senderID, "Message with attachment received");
-    }
-    sendReadReceipt(senderID)
+
+        if (messageText) {
+
+            // If we receive a text message, check to see if it matches any special
+            // keywords and send back the corresponding example. Otherwise, just echo
+            // the text we received.
+            switch (messageText.replace(/[^\w\s]/gi, '').trim().toLowerCase()) {
+                case 'hello':
+                case 'hi':
+                    onboardUser(senderID,user);
+                    break;
+                case 'phq9':
+                    triggerPHQ9(senderID);
+                    break;
+                case 'mood last week':
+                    executeStep(senderID, 'mood_last_week', {}, user);
+                    break;
+                case 'energy last week':
+                    executeStep(senderID, 'energy_last_week', {}, user);
+                    break;
+                /*case 'image':
+                  requiresServerURL(sendImageMessage, [senderID]);
+                  break;
+
+                case 'gif':
+                  requiresServerURL(sendGifMessage, [senderID]);
+                  break;
+
+                case 'audio':
+                  requiresServerURL(sendAudioMessage, [senderID]);
+                  break;
+
+                case 'video':
+                  requiresServerURL(sendVideoMessage, [senderID]);
+                  break;
+
+                case 'file':
+                  requiresServerURL(sendFileMessage, [senderID]);
+                  break;
+
+                case 'button':
+                  sendButtonMessage(senderID);
+                  break;
+
+                case 'generic':
+                  requiresServerURL(sendGenericMessage, [senderID]);
+                  break;
+
+                case 'receipt':
+                  requiresServerURL(sendReceiptMessage, [senderID]);
+                  break;
+
+                case 'quick reply':
+                  sendQuickReply(senderID);
+                  break;
+
+                case 'read receipt':
+                  sendReadReceipt(senderID);
+                  break;
+
+                case 'typing on':
+                  sendTypingOn(senderID);
+                  break;
+
+                case 'typing off':
+                  sendTypingOff(senderID);
+                  break;
+
+                case 'account linking':
+                  requiresServerURL(sendAccountLinking, [senderID]);
+                  break;
+                  */
+
+                default:
+                    if(user.context.step=='find_doctor') {
+                        sendGenericMessage(senderID, {url:'https://www.google.nl/maps/search/doctors+near+me/@52.3706367,4.8725732,14z/'});
+                    } else if(user.context.step=='please_write'){
+                        executeStep(senderID, 'ok_fine', {}, user);
+                    } else {
+                        var step = getNextStepFromInputAndContext(user.context, messageText);
+                        console.log(step)
+                        if(step.name) {
+                            executeStep(senderID, step.name, {}, user)
+                        } else {
+                            var count = 0;
+                            step.forEach((sub_step) => {
+                                setTimeout(() => {
+                                    executeStep(senderID, sub_step.name, {}, user);
+                                }, 2000*(count++))
+                            });
+                        }
+                    }
+            }
+        } else if (messageAttachments) {
+            sendTextMessage(senderID, "Message with attachment received");
+        }
+        sendReadReceipt(senderID)
+    });
+
+
 }
 
 
@@ -462,11 +481,11 @@ function sendHiMessage(recipientId) {
 
 }
 
-function triggerPHQ9(recipientId) {
-    sendPHQ9test(recipientId, 0, 0);
+function triggerPHQ9(recipientId, user) {
+    sendPHQ9test(recipientId, 0, 0, user);
 }
 
-function sendPHQ9test(recipientId, question, score) {
+function sendPHQ9test(recipientId, question, score, user) {
     if(question < 9) {
         var title = phq_test.questions[question];
         var answers = [];
@@ -485,15 +504,15 @@ function sendPHQ9test(recipientId, question, score) {
         sendTextMessage(recipientId, 'You have now finished the test. Your score is '+score);
         setTimeout(() => {
         if(score < 4) {
-            executeStep(recipientId, 'phq9_finished_0', {});
+            executeStep(recipientId, 'phq9_finished_0', {}, user);
         } else if(score < 10) {
-            executeStep(recipientId, 'phq9_finished_1', {});
+            executeStep(recipientId, 'phq9_finished_1', {}, user);
         } else if(score < 15) {
-            executeStep(recipientId, 'phq9_finished_2', {});
+            executeStep(recipientId, 'phq9_finished_2', {}, user);
         } else if(score < 19) {
-            executeStep(recipientId, 'phq9_finished_3', {});
+            executeStep(recipientId, 'phq9_finished_3', {}, user);
         } else {
-            executeStep(recipientId, 'phq9_finished_4', {});
+            executeStep(recipientId, 'phq9_finished_4', {}, user);
         }
         }, 1000)
 
@@ -668,7 +687,7 @@ function sendButtonMessage(recipientId) {
  * Send a Structured Message (Generic Message type) using the Send API.
  *
  */
-function sendGenericMessage(recipientId) {
+function sendGenericMessage(recipientId, data) {
     var messageData = {
         recipient: {
             id: recipientId
@@ -679,32 +698,14 @@ function sendGenericMessage(recipientId) {
                 payload: {
                     template_type: "generic",
                     elements: [{
-                        title: "rift",
-                        subtitle: "Next-generation virtual reality",
-                        item_url: "https://www.oculus.com/en-us/rift/",
-                        image_url: SERVER_URL + "/assets/rift.png",
+                        title: "Doctors near you",
+                        subtitle: "Here's a map of doctor surgeries nearest to you...",
+                        item_url: data.url,
+                        image_url: SERVER_URL + "/assets/maps.png",
                         buttons: [{
                             type: "web_url",
-                            url: "https://www.oculus.com/en-us/rift/",
+                            url: data.url,
                             title: "Open Web URL"
-                        }, {
-                            type: "postback",
-                            title: "Call Postback",
-                            payload: "Payload for first bubble",
-                        }],
-                    }, {
-                        title: "touch",
-                        subtitle: "Your Hands, Now in VR",
-                        item_url: "https://www.oculus.com/en-us/touch/",
-                        image_url: SERVER_URL + "/assets/touch.png",
-                        buttons: [{
-                            type: "web_url",
-                            url: "https://www.oculus.com/en-us/touch/",
-                            title: "Open Web URL"
-                        }, {
-                            type: "postback",
-                            title: "Call Postback",
-                            payload: "Payload for second bubble",
                         }]
                     }]
                 }
@@ -932,59 +933,85 @@ function getUserInfo(psid, cb) {
     });
 }
 
-function onboardUser(userId) {
-    getUserInfo(userId, (user) => {
-        if(user && user.first_name)
-            executeStep(userId, 'greeting', {username: user.first_name});
-        else
-            executeStep(userId, 'greeting', {username: 'Guest'});
-    });
+function onboardUser(userId, u) {
+    if(!u.name){
+        getUserInfo(userId, (user) => {
+            if(user && user.first_name)
+            {
+                u.name = user.first_name;
+                executeStep(userId, 'greeting', {username: user.first_name}, u);
+            }
+            else
+                executeStep(userId, 'greeting', {username: 'Guest'}, u);
+        });
+    } else {
+        executeStep(userId, 'greeting', {username: u.name}, u);
+    }
+
 }
 
-function executeStep(recipientId, i, data) {
-    sendTypingOn(recipientId);
-    let step = i.type ? i : steps[i];
-    if(!step) {
-        sendTextMessage(recipientId, 'I,m not quite sure what you mean.');
-    } else {
-        if (step && step.type) {
-            switch (step.type) {
-                case 'step':
-                    executeStep(recipientId, step.name, data);
-                    break;
-                case 'text':
-                    sendTextMessage(recipientId, process(step.message, data));
-                    break;
-                case 'quick_reply':
-                case 'quick_replies':
-                    sendQuickReply(recipientId, process(step.question, data), step.options);
-                    break;
-                case 'gif':
-                    sendGifMessage(recipientId, step.url);
-                    break;
-                case 'image':
-                    sendImageMessage(recipientId, step.url);
-                    break;
-                default:
-                    break;
-            }
-            if (step.continue) {
-                setTimeout(() => {
-                    executeStep(recipientId, step.continue);
-                }, 2000)
-            }
-        } else if (step.length) {
-            var count = 0;
-            step.forEach((sub_step) => {
-                setTimeout(() => {
-                    executeStep(recipientId, sub_step, data);
-                }, 2000*(count++))
-            })
+function executeStep(recipientId, i, data, user) {
+    console.log(i)
+    let cb = function(user) {
+        sendTypingOn(recipientId);
+        let step = i.type ? i : steps[i];
+        if(!step) {
+            sendTextMessage(recipientId, 'I\'m not quite sure what you mean.');
         } else {
-            sendTextMessage(recipientId, 'I,m not quite sure what you mean.')
+            if (step && step.type) {
+                switch (step.type) {
+                    case 'step':
+                        executeStep(recipientId, step.name, data, user);
+                        break;
+                    case 'text':
+                        sendTextMessage(recipientId, process(step.message, data));
+                        break;
+                    case 'quick_reply':
+                    case 'quick_replies':
+                        sendQuickReply(recipientId, process(step.question, data), step.options);
+                        break;
+                    case 'gif':
+                        sendGifMessage(recipientId, step.url);
+                        break;
+                    case 'image':
+                        sendImageMessage(recipientId, step.url);
+                        break;
+                    default:
+                        break;
+                }
+                if (step.continue) {
+                    setTimeout(() => {
+                        executeStep(recipientId, step.continue, data, user);
+                    }, 2000)
+                }
+            } else if (step.length) {
+                var count = 0;
+                step.forEach((sub_step) => {
+                    setTimeout(() => {
+                        executeStep(recipientId, sub_step, data, user);
+                    }, 2000*(count++))
+                })
+            } else {
+                sendTextMessage(recipientId, 'I,m not quite sure what you mean.')
+            }
         }
+        sendTypingOff(recipientId);
     }
-    sendTypingOff(recipientId);
+    if(!i.type && i!='do_not_understand') {
+        if(!user.context) {
+            user.context = {};
+        }
+        user.context.step = i;
+        User.findOneAndUpdate({id:user.id}, {context:user.context}, {new:true}, function(err, u){
+            console.log('here', u);
+            user = u;
+            cb(user);
+        });
+    } else if (i.type == 'action'){
+        triggerPHQ9(recipientId, user);
+    } else {
+        cb(user);
+    }
 }
 
 function process(text, data) {
@@ -992,6 +1019,21 @@ function process(text, data) {
         text = text.replace(new RegExp('{{'+key+'}}', "g"), data[key]);
     }
     return text;
+}
+
+function getNextStepFromInputAndContext(context, input) {
+    switch(context.step) {
+        case 'button_test':
+            if(input.toLowerCase() == 'no') {
+                return {name:'button_test_fail'};
+            } else if(input.toLowerCase() == 'yes') {
+                return [{name:'do_not_understand'}, {name:'button_test'}];
+            } else {
+                return [{name:'do_not_understand'}, {name:context.step}];
+            }
+        default:
+            return [{name:'do_not_understand'}, {name:context.step}];
+    }
 }
 
 // Start server

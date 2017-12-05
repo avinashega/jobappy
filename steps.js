@@ -67,7 +67,7 @@ module.exports = function() {
             },
             {
                 type: 'text',
-                message: 'Whatever that means \u{1F644}',
+                message: 'Whatever that means right?',
             },
             {
                 type: 'text',
@@ -82,7 +82,7 @@ module.exports = function() {
                 question: 'Sound okay?',
                 options: [
                     {
-                        title: 'Sure!',
+                        title: 'Sure',
                         payload: {
                             step: 'cool'
                         }
@@ -93,7 +93,7 @@ module.exports = function() {
 
         'cool': {
             type: 'text',
-            message: 'Cool!',
+            message: 'Cool',
             continue: 'intro'
         },
 
@@ -168,7 +168,7 @@ module.exports = function() {
         'energy_tired': [
             {
                 type: 'text',
-                message: 'Appreciate sharing that.'
+                message: 'Hey, thanks for that.'
             },
             {
                 type: 'text',
@@ -176,7 +176,7 @@ module.exports = function() {
             },
             {
                 type: 'text',
-                message: 'If you\'re constantly tired, then maybe you should check in with your doctor?'
+                message: 'If you\'re constantly tired, I mean for at least a month, then maybe you should check in with your doctor?'
             },
             {
                 type: 'step',
@@ -197,7 +197,7 @@ module.exports = function() {
                     {
                         title: 'No',
                         payload: {
-                            step: 'energy_full'
+                            step: 'find_mood'
                         }
                     }
                 ]
@@ -240,25 +240,28 @@ module.exports = function() {
         'find_doctor': [
             {
                 type: 'text',
-                message: 'My hoomans are still working on this.',
-                continue: 'done_for_today'
+                message: 'What\'s your location?',
             }
         ],
         'energy_full': [
             {
                 type: 'text',
-                message: 'Glad to hear that!'
-            },
-            {
-                type: 'text',
-                message: 'Let\'s move on to understanding your mood.',
+                message: 'Glad to hear you\'re feeling energetic!',
                 continue: 'find_mood'
             }
         ],
         'find_mood': [
             {
                 type: 'text',
-                message: 'On a scale of 1 to 3, how are you feeling right now?'
+                message: 'Now, lets move on to understanding your mood.'
+            },
+            {
+                type: 'text',
+                message: 'How are you feeling?'
+            },
+            {
+                type: 'text',
+                message: 'To help, I have another scale, but this time from 1 to 3.'
             },
             {
                 type: 'text',
@@ -295,38 +298,19 @@ module.exports = function() {
         ],
         'mood_sad':[
             {
-                type: 'text',
-                message: 'Appreciate sharing that.'
-            },
-            {
-                type: 'step',
-                name: 'mood_stats'
-            },
-            {
-                type: 'text',
-                message: 'If it\'s okay, I\'d like to ask you a few questions.'
-            },
-            {
-                type: 'text',
-                message: 'They\'re not designed to be difficult, but just to help me understand a bit more about your wellbeing.'
-            },
-            {
                 type: 'quick_reply',
-                question: 'Does that sound okay?',
+                question: 'How long have you felt this way?',
                 options: [
                     {
-                        title: 'Yes',
+                        title: 'Only in recent days',
                         payload: {
-                            step: 'launch_phq9',
-                            action: 'phq9',
-                            seq: 0,
-                            score: 0
+                            step: 'phq_4',
                         }
                     },
                     {
-                        title: 'No',
+                        title: 'More than 2 weeks',
                         payload: {
-                            step: 'phq_4'
+                            step: 'phq_9_query'
                         }
                     }
                 ]
@@ -334,13 +318,28 @@ module.exports = function() {
         ],
         'mood_ok': [
             {
-                type: 'step',
-                name: 'mood_stats'
+                type: 'text',
+                message: 'Hey, thanks for sharing that.'
             },
             {
                 type: 'text',
-                message: 'OK',
-                continue: 'phq_4'
+                message:'Did you know you can get an historic summary of your energy and mood levels?'
+            },
+            {
+                type: 'text',
+                message: 'Yeah, just type "mood last week" for a mood summary.'
+            },
+            {
+                type: 'quick_reply',
+                question: 'And "energy last week" for an energy summary, any time.',
+                options: [
+                    {
+                        title: 'OK',
+                        payload: {
+                            step: 'phq_4'
+                        }
+                    }
+                ]
             }
         ],
         'phq_4': [
@@ -587,9 +586,74 @@ module.exports = function() {
             {
                 type : 'text',
                 message: 'Thanks for going through those questions with me.',
-                continue: 'done_for_today'
+                continue: 'journal'
             }
         ],
+        'journal':[
+            {
+                type:'text',
+                message:'Hey, the smart people over at the University of Rochester Medical Center suggest is keeping a daily journal of your mood.'
+            },
+            {
+                type: 'text',
+                message:'It helps you keep a track of your feelings.'
+            },
+            {
+                type: 'quick_reply',
+                question: 'Do you want to read what they have to say?',
+                options:[
+                    {
+                        title:'Yes',
+                        payload:{
+                            step:'journal_link'
+                        }
+                    },
+                    {
+                        title:'No',
+                        payload:{
+                            step:'write_feelings'
+                        }
+                    }
+                ]
+            }
+        ],
+        'journal_link':{
+            type:'text',
+            message:'Here\'s the link: https://www.urmc.rochester.edu/encyclopedia/content.aspx?ContentID=4552&ContentTypeID=1'
+        },
+        'write_feelings':[
+            {
+                type:'text',
+                message:'Ok. Let\'s go ahead and write our first entry.'
+            },
+            {
+                type:'quick_reply',
+                question:'Sound okay?',
+                options:[
+                    {
+                        title:'Yes',
+                        payload:{
+                            step:'please_write'
+                        }
+                    },
+                    {
+                        title:'No',
+                        payload:{
+                            step:'done_for_today'
+                        }
+                    }
+                ]
+            }
+        ],
+        'please_write':{
+            type:'text',
+            message:'Please write how you feel at this moment in time...'
+        },
+        'ok_fine':{
+            type:'text',
+            message:'Okay, that\'s fine.',
+            continue:'done_for_today'
+        },
         'done_for_today': [
             {
                 type: 'text',
@@ -612,11 +676,65 @@ module.exports = function() {
                 message: 'Bye for now. 👋'
             }
         ],
+        'phq_9_query':[
+            {
+                type: 'text',
+                message: 'OK.'
+            },
+            {
+                type: 'text',
+                message:'If it\'s okay, I\'ld like to ask you a few questions.'
+            },
+            {
+                type: 'text',
+                message: 'They\'re not designed to be difficult, but just to help me understand a bit more about your wellbeing.'
+            },
+            {
+                type: 'quick_reply',
+                question: 'Does that sound okay?',
+                options:[
+                    {
+                        title:'Yes',
+                        payload: {
+                            step: 'begin_phq9',
+                        }
+                    },
+                    {
+                        title:'No',
+                        payload: {
+                            step: 'phq_4',
+                        }
+                    }
+                ]
+            },
+        ],
+        'begin_phq9':[
+            {
+                type: 'text',
+                message: 'OK'
+            },
+            {
+                type :'text',
+                message: 'Thanks for that.'
+            },
+            {
+                type:'text',
+                message:'Over the last 2 weeks, how often have you been bothered by any of the following:'
+            },
+            {
+                type : 'action',
+                name: 'phq9'
+            }
+        ],
         'depression_level':{
             type: 'text',
-            message:'Your depression level:'
+            message:'Here\'s how you compare against a normalised scale for this test.'
         },
         'phq9_finished_0':[
+            {
+                type: 'text',
+                message:'Great! Everything looks to be okay.'
+            },
             {
                 type: 'step',
                 name:'depression_level'
@@ -626,11 +744,27 @@ module.exports = function() {
                 url: 'phq9_0.png'
             },
             {
-                type: 'step',
-                name: 'done_for_today'
+                type: 'text',
+                name: '👍🏻'
             }
         ],
         'phq9_finished_1':[
+            {
+                type:'text',
+                message:'Hey'
+            },
+            {
+                type:'text',
+                message:'So, it\'s a mix of good and bad news.'
+            },
+            {
+                type:'text',
+                message:'Good news? You\'ve passed!'
+            },
+            {
+                type:'text',
+                message:'You seem to be relatively okay.'
+            },
             {
                 type: 'step',
                 name:'depression_level'
@@ -638,13 +772,17 @@ module.exports = function() {
             {
                 type: 'image',
                 url: 'phq9_1.png'
-            },
-            {
-                type: 'step',
-                name: 'done_for_today'
             }
         ],
         'phq9_finished_2':[
+            {
+                type:'text',
+                message:'Hey'
+            },
+            {
+                type:'text',
+                message:'It looks as though you\'re not quite feeling up to your normal self.'
+            },
             {
                 type: 'step',
                 name:'depression_level'
@@ -654,25 +792,37 @@ module.exports = function() {
                 url: 'phq9_2.png'
             },
             {
+                type:'text',
+                message:'I\'d recommend that you check in with a doctor'
+            },
+            {
                 type: 'step',
                 name: 'find_doctor_query'
             }
         ],
         'phq9_finished_3':[
             {
-                type: 'step',
-                name:'depression_level'
+                type: 'text',
+                message: 'Hey'
             },
             {
-                type: 'image',
-                url: 'phq9_3.png'
+                type:'text',
+                message:'So, it\'s not great news.'
+            },
+            {
+                type:'text',
+                message:'Unfortunately.I\'d like for you to see a doctor about how you feel.'
             },
             {
                 type: 'step',
-                name: 'find_doctor_query'
+                name: 'find_doctor'
             }
         ],
         'phq9_finished_4':[
+            {
+                type: 'text',
+                message:'The test you\'ve just carried out has resulted in some difficult news to share.'
+            },
             {
                 type: 'step',
                 name:'depression_level'
@@ -682,9 +832,17 @@ module.exports = function() {
                 url: 'phq9_4.png'
             },
             {
+                type: 'text',
+                message:'I\'d recommend that you seek medical advice right away.'
+            },
+            {
                 type: 'step',
-                name: 'find_doctor_query'
+                name: 'find_doctor'
             }
-        ]
+        ],
+        'do_not_understand':[{
+            type:'text',
+            message:'Sorry, I do not understand that. Let\'s try that again.'
+        }]
     }
 }
