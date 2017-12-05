@@ -329,7 +329,6 @@ function receivedMessage(event) {
                         executeStep(senderID, 'ok_fine', {}, user);
                     } else {
                         var step = getNextStepFromInputAndContext(user.context, messageText);
-                        console.log(step)
                         if(step.name) {
                             executeStep(senderID, step.name, {}, user)
                         } else {
@@ -951,7 +950,6 @@ function onboardUser(userId, u) {
 }
 
 function executeStep(recipientId, i, data, user) {
-    console.log(i)
     let cb = function(user) {
         sendTypingOn(recipientId);
         let step = i.type ? i : steps[i];
@@ -1031,6 +1029,8 @@ function getNextStepFromInputAndContext(context, input) {
             } else {
                 return [{name:'do_not_understand'}, {name:context.step}];
             }
+        case 'done_for_today':
+            return {name:'do_not_understand'};
         default:
             return [{name:'do_not_understand'}, {name:context.step}];
     }
