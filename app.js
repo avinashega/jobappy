@@ -700,7 +700,7 @@ function sendGenericMessage(recipientId, data) {
                         title: "Doctors near you",
                         subtitle: "Here's a map of doctor surgeries nearest to you...",
                         item_url: data.url,
-                        image_url: SERVER_URL + "/assets/maps.png",
+                        image_url: "https://preview.ibb.co/gNHt2w/Screen_Shot_2017_12_06_at_12_00_32_AM.png",
                         buttons: [{
                             type: "web_url",
                             url: data.url,
