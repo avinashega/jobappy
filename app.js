@@ -258,11 +258,12 @@ function receivedMessage(event) {
             switch (messageText.replace(/[^\w\s]/gi, '').trim().toLowerCase()) {
                 case 'hello':
                 case 'hi':
-                    if(!user.onboarded) {
+                    if(!user.context.onboarded) {
+
                         onboardUser(senderID, user);
                     } else {
                         executeStep(senderID, {type:'text', message:'Hey, {{username}}!'}, {username: user.name}, user);
-                        setTimeout(function(){
+                        setTimeout(function() {
                             executeStep(senderID, 'find_energy', {}, user);
                         }, 2000);
                     }
