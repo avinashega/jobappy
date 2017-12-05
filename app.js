@@ -258,7 +258,14 @@ function receivedMessage(event) {
             switch (messageText.replace(/[^\w\s]/gi, '').trim().toLowerCase()) {
                 case 'hello':
                 case 'hi':
-                    onboardUser(senderID,user);
+                    if(!user.onboarded) {
+                        onboardUser(senderID, user);
+                    } else {
+                        executeStep(senderID, {type:'text', message:'Hey, {{username}}!'}, {username: user.name}, user);
+                        setTimeout(function(){
+                            executeStep(senderID, 'find_energy', {}, user);
+                        }, 2000);
+                    }
                     break;
                 case 'phq9':
                     triggerPHQ9(senderID);
@@ -324,7 +331,7 @@ function receivedMessage(event) {
 
                 default:
                     if(user.context.step=='find_doctor') {
-                        sendGenericMessage(senderID, {url:'https://www.google.nl/maps/search/doctors+near+me/@52.3706367,4.8725732,14z/'});
+                        sendGenericMessage(senderID, {url:'https://www.google.com/maps/search/doctors+near+me/@52.3706367,4.8725732,14z/'});
                     } else if(user.context.step=='please_write'){
                         executeStep(senderID, 'ok_fine', {}, user);
                     } else {
