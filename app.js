@@ -220,7 +220,7 @@ function receivedMessage(event) {
     var timeOfMessage = event.timestamp;
     var message = event.message;
 
-    User.findOneAndUpdate({id:recipientID}, {}, {upsert:true, new: true}, function(err, user){
+    User.findOneAndUpdate({id:senderID}, {}, {upsert:true, new: true}, function(err, user){
 
         var user = user;
         if(!user.context) {
