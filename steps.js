@@ -555,7 +555,8 @@ module.exports = function() {
         ],
         'journal_link':{
             type:'text',
-            message:'Here\'s the link: https://www.urmc.rochester.edu/encyclopedia/content.aspx?ContentID=4552&ContentTypeID=1'
+            message:'Here\'s the link: https://www.urmc.rochester.edu/encyclopedia/content.aspx?ContentID=4552&ContentTypeID=1',
+            continue:'write_feelings'
         },
         'write_feelings':[
             {
