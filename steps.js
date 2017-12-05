@@ -368,24 +368,8 @@ module.exports = function() {
         ],
         'phq4_1':[
             {
-                type: 'text',
-                message: '1/4. How often over the last two weeks were you bothered by feeling anxious, nervous or on edge?'
-            },
-            {
-                type: 'text',
-                message: '1. not at all'
-            },
-            {
-                type: 'text',
-                message: '2. several days'
-            },
-            {
-                type: 'text',
-                message: '3. more than half the days'
-            },
-            {
                 type: 'quick_reply',
-                question: '4. nearly every day',
+                question: '1/4. How often over the last two weeks were you bothered by feeling anxious, nervous or on edge?\n1. Not at All\n2. Several Days\n3. More than half the Days\n4. Nearly every day',
                 options: [
                     {
                         title: '1',
@@ -420,24 +404,8 @@ module.exports = function() {
         ],
         'phq4_2':[
             {
-                type: 'text',
-                message: '2/4. How often of the last two weeks were you bothered by not being able to stop or control worry?'
-            },
-            {
-                type: 'text',
-                message: '1. not at all'
-            },
-            {
-                type: 'text',
-                message: '2. several days'
-            },
-            {
-                type: 'text',
-                message: '3. more than half the days'
-            },
-            {
                 type: 'quick_reply',
-                question: '4. nearly every day',
+                question: '2/4. How often of the last two weeks were you bothered by not being able to stop or control worry?\n1. Not at All\n2. Several Days\n3. More than half the Days\n4. Nearly every day',
                 options: [
                     {
                         title: '1',
@@ -476,24 +444,8 @@ module.exports = function() {
                 message: 'Just two more to go'
             },
             {
-                type: 'text',
-                message: '3/4. How often over the last two weeks were you bothered by little interest or pleasure in doing things?'
-            },
-            {
-                type: 'text',
-                message: '1. not at all'
-            },
-            {
-                type: 'text',
-                message: '2. several days'
-            },
-            {
-                type: 'text',
-                message: '3. more than half the days'
-            },
-            {
                 type: 'quick_reply',
-                question: '4. nearly every day',
+                question: '3/4. How often over the last two weeks were you bothered by little interest or pleasure in doing things?\n1. Not at All\n2. Several Days\n3. More than half the Days\n4. Nearly every day',
                 options: [
                     {
                         title: '1',
@@ -528,24 +480,8 @@ module.exports = function() {
         ],
         'phq4_4':[
             {
-                type: 'text',
-                message: '4/4. How often over the last two weeks were you bothered by feeling down, depressed, or hopeless?'
-            },
-            {
-                type: 'text',
-                message: '1. not at all'
-            },
-            {
-                type: 'text',
-                message: '2. several days'
-            },
-            {
-                type: 'text',
-                message: '3. more than half the days'
-            },
-            {
                 type: 'quick_reply',
-                question: '4. nearly every day',
+                question: '4/4. How often over the last two weeks were you bothered by feeling down, depressed, or hopeless?\n1. Not at All\n2. Several Days\n3. More than half the Days\n4. Nearly every day',
                 options: [
                     {
                         title: '1',
