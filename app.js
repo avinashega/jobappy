@@ -511,7 +511,7 @@ function sendPHQ9test(recipientId, question, score, user) {
         });
         sendQuickReply(recipientId, title, answers);
     } else {
-        sendTextMessage(recipientId, 'You have now finished the test. Your score is '+score);
+        sendTextMessage(recipientId, 'You have now finished the test. Your score is '+score+'.');
         setTimeout(() => {
         if(score < 4) {
             executeStep(recipientId, 'phq9_finished_0', {}, user);

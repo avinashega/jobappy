@@ -624,7 +624,7 @@ module.exports = function() {
             },
             {
                 type: 'text',
-                message:'If it\'s okay, I\'ld like to ask you a few questions.'
+                message:'If it\'s okay, I\'d like to ask you a few questions.'
             },
             {
                 type: 'text',
@@ -652,7 +652,7 @@ module.exports = function() {
         'begin_phq9':[
             {
                 type: 'text',
-                message: 'OK'
+                message: 'OK.'
             },
             {
                 type :'text',
@@ -752,7 +752,7 @@ module.exports = function() {
             },
             {
                 type:'text',
-                message:'Unfortunately.I\'d like for you to see a doctor about how you feel.'
+                message:'Unfortunately, I\'d like for you to see a doctor about how you feel.'
             },
             {
                 type: 'step',
