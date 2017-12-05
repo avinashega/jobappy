@@ -107,6 +107,10 @@ module.exports = function() {
                 message: 'The first is to understand how energetic you feel.'
             },
             {
+                type : 'action',
+                name: 'onboarded'
+            },
+            {
                 type: 'quick_reply',
                 question: 'And the second to understand your mood.',
                 options: [

@@ -332,6 +332,9 @@ function receivedMessage(event) {
                 default:
                     if(user.context.step=='find_doctor') {
                         sendGenericMessage(senderID, {url:'https://www.google.com/maps/search/doctors+near+me/@52.3706367,4.8725732,14z/'});
+                        setTimeout(function(){
+                            executeStep(senderID, 'journal', {}, user);
+                        }, 2000);
                     } else if(user.context.step=='please_write'){
                         executeStep(senderID, 'ok_fine', {}, user);
                     } else {
@@ -1013,7 +1016,17 @@ function executeStep(recipientId, i, data, user) {
             cb(user);
         });
     } else if (i.type == 'action'){
-        triggerPHQ9(recipientId, user);
+        if (action == 'phq9')
+            triggerPHQ9(recipientId, user);
+        if(action == 'onboarded') {
+            if(!user.context) {
+                user.context = {};
+            }
+            user.context.onboarded = 1;
+            User.findOneAndUpdate({id:user.id}, {context: user.context}, {new: true}, function(err, user) {
+                console.log('user on-boarded');
+            })
+        }
     } else {
         cb(user);
     }
