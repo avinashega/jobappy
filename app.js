@@ -1016,9 +1016,9 @@ function executeStep(recipientId, i, data, user) {
             cb(user);
         });
     } else if (i.type == 'action'){
-        if (action == 'phq9')
+        if (i.name == 'phq9')
             triggerPHQ9(recipientId, user);
-        if(action == 'onboarded') {
+        if(i.name == 'onboarded') {
             if(!user.context) {
                 user.context = {};
             }
