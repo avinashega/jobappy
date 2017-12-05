@@ -949,6 +949,7 @@ function onboardUser(userId, u) {
             if(user && user.first_name)
             {
                 u.name = user.first_name;
+                User.findOneAndUpdate({id:u.id}, {name:u.name}, function(err, use){});
                 executeStep(userId, 'greeting', {username: user.first_name}, u);
             }
             else
